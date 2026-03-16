@@ -27,5 +27,6 @@ Route::middleware([
 ])->group(function () {
     Route::get('/', [TenantController::class, 'current']);
     Route::get('/test', [TenantController::class,'test']);
+    Route::get('/products', [TenantController::class,'seeProducts']);
 });
 

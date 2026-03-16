@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant;
 
 use Illuminate\Support\Facades\DB;
+use App\Models\Product;
 
 class TenantController extends Controller
 {
@@ -23,6 +24,14 @@ class TenantController extends Controller
             'message'     => 'You are inside a tenant!',
             'tenant_id'   => tenant('id'),
             'tenant_info' => DB::table('tenant_info')->first(),
+            'products' => Product::all(),
+        ]);
+    }
+
+    public function seeProducts(Request $request){
+        return response()->json([
+            'message'=> 'You have opened Products',
+            'products' => Product::all(),
         ]);
     }
 

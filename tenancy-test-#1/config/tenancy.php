@@ -30,6 +30,7 @@ return [
         ],
     ],
 
+    // If Separate, stancl multi database separation doesnt work
     // 'database_managers' => [
     //     'pgsql' => Stancl\Tenancy\TenantDatabaseManagers\PostgreSQLDatabaseManager::class,
     // ],
