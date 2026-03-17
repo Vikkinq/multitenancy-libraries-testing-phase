@@ -17,7 +17,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlite'),
+    'default' => env('DB_CONNECTION', 'landlord'),
 
     /*
     |--------------------------------------------------------------------------
@@ -114,6 +114,33 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
+        'landlord' => [
+            'driver'      => 'pgsql',
+            'host'        => env('DB_HOST', '127.0.0.1'),
+            'port'        => env('DB_PORT', '5432'),
+            'database'    => env('LANDLORD_DB', 'spatie_main_db'),
+            'username'    => env('DB_USERNAME', 'postgres'),
+            'password'    => env('DB_PASSWORD', ''),
+            'charset'     => 'utf8',
+            'prefix'      => '',
+            'search_path' => 'public',
+            'sslmode'     => 'prefer',
+        ],
+
+        'tenant' => [
+            'driver'         => 'pgsql',
+            'host'           => env('DB_HOST', '127.0.0.1'),
+            'port'           => env('DB_PORT', '5432'),
+            'database'       => null, // Dynamic Switching
+            'username'       => env('DB_USERNAME', 'postgres'),
+            'password'       => env('DB_PASSWORD', ''),
+            'charset'        => 'utf8',
+            'prefix'         => '',
+            'prefix_indexes' => true,
+            'search_path'    => 'public',
+            'sslmode'        => 'prefer',
+        ],
+
     ],
 
     /*
@@ -179,6 +206,14 @@ return [
             'backoff_cap' => env('REDIS_BACKOFF_CAP', 1000),
         ],
 
+    ],
+
+    'tenant' => [
+        'driver' => 'pgsql',
+        'host' => env('DB_HOST'),
+        'database' => null,
+        'username' => env('DB_USERNAME'),
+        'password' => env('DB_PASSWORD'),
     ],
 
 ];

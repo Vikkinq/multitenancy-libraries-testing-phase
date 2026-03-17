@@ -11,7 +11,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->validateCsrfTokens(except: ['*']);
+        $middleware->alias([
+            'needs-tenant' => \Spatie\Multitenancy\Http\Middleware\NeedsTenant::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
