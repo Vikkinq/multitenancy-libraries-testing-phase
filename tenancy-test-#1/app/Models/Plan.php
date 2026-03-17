@@ -9,8 +9,13 @@ class Plan extends Model
     //
     protected $fillable = [
         'name',
+        'slug',
         'amount'
     ];
 
     public $timestamps = true;
+
+    public function getRouteKeyName(){
+        return 'slug';
+    }
 }

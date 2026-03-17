@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->decimal('amount', 5, 2); // 10 digits, 2 decimals
+            $table->string('name')->unique();
+            $table->string('slug')->unique(); // for URLs or lookups
+            $table->decimal('amount', 5, 2); // price with decimals
             $table->timestamps();
         });
     }
