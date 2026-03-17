@@ -10,20 +10,19 @@ use Illuminate\Support\Facades\DB;
 class TenantController extends Controller
 {
     // List all tenants
-    public function index()
-    {
+    public function index(){
         return response()->json(Tenant::all());
     }
 
     // Create a tenant (auto-creates its DB)
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $request->validate([
-            'name'   => 'required|string|unique:landlord.tenants,name',
-            'domain' => 'required|string|unique:landlord.tenants,domain',
+            'name' => 'required|string|unique:landlord.tenants,name',
         ]);
 
-        $tenant = Tenant::create($request->only('name', 'domain'));
+        $tenant = Tenant::create($request->only('name'));
+
+        $tenant->setupDatabase();
 
         return response()->json([
             'message' => 'Tenant created',
@@ -32,11 +31,10 @@ class TenantController extends Controller
     }
 
     // Prove tenant identification + DB switching
-    public function whoami()
-    {
+    public function whoami(){
         $tenant = Tenant::current();
 
-        if (! $tenant) {
+        if (!$tenant) {
             return response()->json(['message' => 'No tenant identified'], 400);
         }
 

@@ -5,25 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Tenant;
+use App\Models\Plan;
 
 class PlanController extends Controller
 {
     public function index(){
         return response()->json([
-            'plans' => [
-                [
-                    'name'  => 'Standard',
-                    'price' => 9.99,
-                ],
-                [
-                    'name'  => 'Pro',
-                    'price' => 19.99,
-                ],
-                [
-                    'name'  => 'Supreme',
-                    'price' => 49.99,
-                ],
-            ]
+            "plans" => Plan::all(),
         ]);
     }
 
