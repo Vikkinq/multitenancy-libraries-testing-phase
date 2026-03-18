@@ -17,12 +17,12 @@ class TenantController extends Controller
     // Create a tenant (auto-creates its DB)
     public function store(Request $request){
         $request->validate([
-            'name' => 'required|string|unique:landlord.tenants,name',
+            'name'  => 'required|string',
+            'email' => 'required|email',
         ]);
 
         $tenant = Tenant::create($request->only('name'));
-
-        $tenant->setupDatabase();
+        $tenant->setupDatabase(email: $request->email);
 
         return response()->json([
             'message' => 'Tenant created',
@@ -38,12 +38,15 @@ class TenantController extends Controller
             return response()->json(['message' => 'No tenant identified'], 400);
         }
 
+        $tenantInfo = DB::connection('tenant')->table('tenant_info')->first();
+
         return response()->json([
             'tenant_id'   => $tenant->id,
             'tenant_name' => $tenant->name,
             'tenant_db'   => $tenant->database,
             'tenant_domain' => $tenant->domain,
             'active_db'   => DB::connection('tenant')->getDatabaseName(),
+            'tenant_info' => $tenantInfo,
         ]);
     }
 }

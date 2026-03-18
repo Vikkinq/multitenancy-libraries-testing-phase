@@ -25,15 +25,22 @@ class Tenant extends BaseTenant
         });
     }
 
-    public function setupDatabase(): void
+    public function setupDatabase(string $email): void
     {
         $databaseName = $this->database;
         DB::connection('landlord')->statement("CREATE DATABASE \"{$databaseName}\"");
         $this->makeCurrent();
+
         Artisan::call('migrate', [
             '--database' => 'tenant',
             '--path'     => 'database/migrations/tenant',
             '--force'    => true,
+        ]);
+
+        (new \Database\Seeders\TenantInfoSeeder())->run([
+            'tenant_id'   => $this->id,
+            'tenant_name' => $this->name,
+            'email'       => $email,
         ]);
 
         self::forgetCurrent();
