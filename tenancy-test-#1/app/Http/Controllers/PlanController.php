@@ -24,6 +24,7 @@ class PlanController extends Controller
 
         $selectedPlan = Plan::where('name', $plan)->firstOrFail();
 
+        // Creation of Tenant
         $tenant = Tenant::create([
             'id'          => str()->slug($request->name),
             'tenant_name' => $request->name . "'s Workspace",
