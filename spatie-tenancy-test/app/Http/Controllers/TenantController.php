@@ -31,7 +31,7 @@ class TenantController extends Controller
     }
 
     // Prove tenant identification + DB switching
-    public function whoami(){
+    public function current(){
         $tenant = Tenant::current();
 
         if (!$tenant) {

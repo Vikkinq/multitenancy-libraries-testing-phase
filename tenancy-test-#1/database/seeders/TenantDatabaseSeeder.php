@@ -11,6 +11,8 @@ class TenantDatabaseSeeder extends Seeder
     {
         $tenant = tenant(); // gets the current tenant context
 
+        // SEEDS
+
         DB::table('tenant_info')->insert([
             'tenant_id'    => $tenant->id,
             'tenant_name'  => $tenant->tenant_name,
